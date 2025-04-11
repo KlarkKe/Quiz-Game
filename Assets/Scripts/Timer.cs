@@ -3,9 +3,9 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     [SerializeField] float timeToCompleteQuestion = 30f;
-    [SerializeField] float timeToShowCorrectAnswer = 10f; 
-    
-    public bool isAnsweringQuestion = 
+    [SerializeField] float timeToShowCorrectAnswer = 10f;
+
+    public bool isAnsweringQuestion = false;
 
     float timerValue;
 
@@ -18,11 +18,20 @@ public class Timer : MonoBehaviour
     {
         timerValue -= Time.deltaTime;
 
-        if (timerValue <= 0)
+        if (isAnsweringQuestion)
         {
-            timerValue = timeToCompleteQuestion;
+            if (timerValue <= 0)
+            {
+                isAnsweringQuestion = false;
+                timerValue = timeToCompleteQuestion;
+            }
+        }
+        else
+        {
+            isAnsweringQuestion = true;
+            timerValue = timeToShowCorrectAnswer;
         }
 
-
+        Debug.Log(timerValue);
     }
 }
